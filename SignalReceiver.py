@@ -70,10 +70,10 @@ while (True):
 			t = 0.001
 			empezar=False
 			
-		with open(medicion_path,'w',newline='') as archivo:
-			csvwriter = csv.writer(archivo, delimiter=' ',
-                            quotechar='|', quoting=csv.QUOTE_MINIMAL)
-			csvwriter.writerow(read_word_2c(0x3b))
+		with open(medicion_path,'a',newline='') as archivo:
+			csvwriter = csv.writer(archivo)
+			row = [read_word_2c(0x3b)]
+			csvwriter.writerow(row)
 			
 	elif (parar == True):
 		t = 1
