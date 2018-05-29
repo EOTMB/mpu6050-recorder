@@ -1,9 +1,13 @@
 from flask import *
+import io
+import csv
 import os
 import signal
 
+
 app = Flask(__name__)
 
+medicion_path="medicion.csv"
 
 @app.route('/')
 def index():
@@ -32,7 +36,20 @@ def process2():
     #send signal to process id
     os.kill(processId, signal.SIGUSR2)
     
-    return render_template('trigger2.html')
+    data = open(medicion_path,"r")
+    #csvRead = csv.reader(data.read()) 
+    #si = io.StringIO()
+    #cw = csv.writer(si)
+    #cw.writerows(data.read())
+    #output = make_response(si.getvalue())
+    output = make_response(data.read())
+    data.close()
+    output.headers["Content-Disposition"] = "attachment; filename=medicion.csv"
+    output.headers["Content-type"] = "text/csv"
+    return output
+
+    
+    #return render_template('trigger2.html')
     
 
 if __name__ == '__main__':
