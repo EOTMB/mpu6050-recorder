@@ -12,7 +12,7 @@ power_mgmt_2 = 0x6c
 
 grabar=False
 parar=False
-empezar=False
+empezar=True
 t=1
 
 bus = smbus.SMBus(1) # or bus = smbus.SMBus(1) for Revision 2 boards
@@ -66,29 +66,21 @@ signal.signal(signal.SIGUSR1,handUSR1)
 signal.signal(signal.SIGUSR2,handUSR2)
 
 while (True):
-	if (grabar == True):
-		if (empezar == True):
-			bus.write_byte_data(address, power_mgmt_1, 0)
-			t = 0.001
-			empezar=False
-            data = np.empty(0,0)
+    if (empezar):
+        bus.write_byte_data(address, power_mgmt_1, 0)
+    	t = 0.001
+    	empezar=False
+        data = np.empty(0,0)
 
-        if data.size() << 5000:
-            row = read_word_2c(0x3b)/16384.0
-            data=np.append(data,row)
-        else:
-            np.save('measure',data)
-            data = np.empty(0,0)
-
-
-		with open(medicion_path,'a',newline='') as archivo:
-			csvwriter = csv.writer(archivo)
-			row = [read_word_2c(0x3b)/16384.0]
-			csvwriter.writerow(row)
-
-	elif (parar == True):
-		t = 1
-		parar = False
-	else:
-		print ('Esperando')
+    if data.size() << 5000:
+        row = read_word_2c(0x3b)/16384.0
+        data=np.append(data,row)
+    else:
+        np.save('measure',data)
+        data = np.empty(0,0)
+	#elif (parar == True):
+		#t = 1
+		#parar = False
+	#else:
+		#print ('Esperando')
 	time.sleep(t)
