@@ -76,7 +76,7 @@ while (True):
         data=np.append(data,row)
     else:
         np.save('measure',data)
-        data = np.empty(0,0)
+        data = np.empty([0,0])
 	#elif (parar == True):
 		#t = 1
 		#parar = False
