@@ -5,12 +5,14 @@ import time
 import smbus
 import math
 import csv
+import numpy as np
 # Power management registers
 power_mgmt_1 = 0x6b
 power_mgmt_2 = 0x6c
 
 grabar=False
 parar=False
+empezar=False
 t=1
 
 bus = smbus.SMBus(1) # or bus = smbus.SMBus(1) for Revision 2 boards
@@ -53,7 +55,7 @@ def handUSR1(signum,frame):
     global empezar
     grabar = True
     empezar = True
- 
+
 def handUSR2(signum,frame):
     global grabar
     global parar
@@ -69,16 +71,24 @@ while (True):
 			bus.write_byte_data(address, power_mgmt_1, 0)
 			t = 0.001
 			empezar=False
-			
+            data = np.empty(0,0)
+
+        if data.size() << 5000:
+            row = read_word_2c(0x3b)/16384.0
+            data=np.append(data,row)
+        else:
+            np.save('measure',data)
+            data = np.empty(0,0)
+
+
 		with open(medicion_path,'a',newline='') as archivo:
 			csvwriter = csv.writer(archivo)
-			row = [read_word_2c(0x3b)]
+			row = [read_word_2c(0x3b)/16384.0]
 			csvwriter.writerow(row)
-			
+
 	elif (parar == True):
 		t = 1
 		parar = False
 	else:
 		print ('Esperando')
 	time.sleep(t)
-    

@@ -22,9 +22,9 @@ def process1():
 
     #send signal to process id
     os.kill(processId, signal.SIGUSR1)
-    
+
     return render_template('trigger1.html')
-    
+
 
 @app.route('/trigger2')
 def process2():
@@ -32,13 +32,13 @@ def process2():
     fh=open("processid.txt","r")
     processId = int(fh.read())
     fh.close()
-    
+
     #send signal to process id
     os.kill(processId, signal.SIGUSR2)
-    
+
     data = open(medicion_path,"r")
-    #csvRead = csv.reader(data.read()) 
-    #si = io.StringIO()
+    #csvRead = csv.reader(data.read())
+    #si = io.ByteIO()
     #cw = csv.writer(si)
     #cw.writerows(data.read())
     #output = make_response(si.getvalue())
@@ -48,9 +48,9 @@ def process2():
     output.headers["Content-type"] = "text/csv"
     return output
 
-    
+
     #return render_template('trigger2.html')
-    
+
 
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0')
