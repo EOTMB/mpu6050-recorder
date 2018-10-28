@@ -10,14 +10,15 @@ import numpy as np
 power_mgmt_1 = 0x6b
 power_mgmt_2 = 0x6c
 
-grabar=False
-parar=False
-empezar=True
-t=1
+start_record    = True
+continue_record = False
+stop_record     = False
+
+t = 1
 
 bus = smbus.SMBus(1) # or bus = smbus.SMBus(1) for Revision 2 boards
 address = 0x68       # This is the address value read via the i2cdetect command
-medicion_path="medicion.csv"
+#medicion_path="medicion.csv"
 fh=open("processid.txt","w")
 fh.write(str(os.getpid())) #get current process id and store in file
 fh.close()
@@ -51,32 +52,33 @@ def get_x_rotation(x,y,z):
     return math.degrees(radians)
 
 def handUSR1(signum,frame):
-    global grabar
-    global empezar
-    grabar = True
-    empezar = True
+    global continue_record
+    global start_record
+    start_record     = True
+    continue_record  = True
+
 
 def handUSR2(signum,frame):
-    global grabar
-    global parar
-    grabar = False
-    parar = True
+    global continue_record
+    global stop_record
+    continue_record = False
+    stop_record     = True
 
 signal.signal(signal.SIGUSR1,handUSR1)
 signal.signal(signal.SIGUSR2,handUSR2)
 
 while (True):
-    if (empezar):
+    if (start_record):
         bus.write_byte_data(address, power_mgmt_1, 0)
-        data = np.empty(0)
-        t = 0.001
-        empezar=False
+        data    = np.empty(0)
+        t       = 0.001
+        start_record = False
 
     if data.size < 5000:
-        row = [read_word_2c(0x3b)/16384.0]
-        data=np.append(data,row)
+        row  = [read_word_2c(0x3b)/16384.0]
+        data = np.append(data,row)
     else:
-        np.save('measure',data)
+        np.save('measure/measure',data)
         data = np.empty(0)
         print('Dump')
 	#elif (parar == True):

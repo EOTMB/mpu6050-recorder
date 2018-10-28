@@ -3,9 +3,10 @@ import io
 import csv
 import os
 import signal
+import numpy as np
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='')
 
 medicion_path="medicion.csv"
 
@@ -50,7 +51,9 @@ def process2():
 
 
     #return render_template('trigger2.html')
-
+@app.route('/measure/<path:path>')
+def send_measure(path):
+    return send_from_directory('measure', path)
 
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0')
