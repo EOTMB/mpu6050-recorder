@@ -68,10 +68,11 @@ signal.signal(signal.SIGUSR2,handUSR2)
 while (True):
     if (empezar):
         bus.write_byte_data(address, power_mgmt_1, 0)
+        data = np.empty(0)
         t = 0.001
         empezar=False
-        data = np.empty(0)
-    if data.size << 5000:
+
+    if data.size < 5000:
         row = [read_word_2c(0x3b)/16384.0]
         data=np.append(data,row)
     else:
