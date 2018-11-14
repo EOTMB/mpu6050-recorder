@@ -11,7 +11,7 @@ power_mgmt_1 = 0x6b
 power_mgmt_2 = 0x6c
 
 start_record    = True
-continue_record = False
+continue_record = True
 stop_record     = False
 
 t = 1
@@ -92,8 +92,8 @@ if __name__ == '__main__':
                 print('Dump')
 
     	elif (stop_record == True):
-    		t = 1
-    		stop_record = False
+            t = 1
+            stop_record = False
     	else:
-    		print ('Esperando')
+            print ('Esperando')
             time.sleep(t)
