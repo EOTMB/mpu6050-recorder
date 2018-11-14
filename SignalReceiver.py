@@ -95,6 +95,6 @@ if __name__ == '__main__':
             t = 1
             stop_record = False
 
-    	else:
+        else:
             print ('Esperando')
             time.sleep(t)
