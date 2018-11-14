@@ -1,10 +1,10 @@
 import os
 import sys
 import signal
-import time
 import smbus
+
+import time
 import math
-import csv
 import numpy as np
 # Power management registers
 power_mgmt_1 = 0x6b
@@ -18,7 +18,6 @@ t = 1
 
 bus = smbus.SMBus(1) # or bus = smbus.SMBus(1) for Revision 2 boards
 address = 0x68       # This is the address value read via the i2cdetect command
-#medicion_path="medicion.csv"
 fh=open("processid.txt","w")
 fh.write(str(os.getpid())) #get current process id and store in file
 fh.close()
@@ -67,23 +66,34 @@ def handUSR2(signum,frame):
 signal.signal(signal.SIGUSR1,handUSR1)
 signal.signal(signal.SIGUSR2,handUSR2)
 
-while (True):
-    if (start_record):
-        bus.write_byte_data(address, power_mgmt_1, 0)
-        data    = np.empty(0)
-        t       = 0.001
-        start_record = False
+if __name__ == '__main__':
+    while (True):
+        if (start_record):
+            bus.write_byte_data(address, power_mgmt_1, 0)
+            dataX        = np.empty(0)
+            dataY        = np.empty(0)
+            dataZ        = np.empty(0)
+            t            = 0.001
+            start_record = False
 
-    if data.size < 4000:
-        row  = [read_word_2c(0x3b)/16384.0]
-        data = np.append(data,row)
-    else:
-        np.save('measure/measure',data)
-        data = np.empty(0)
-        print('Dump')
-	#elif (parar == True):
-		#t = 1
-		#parar = False
-	#else:
-		#print ('Esperando')
-        time.sleep(t)
+        if (continue_record == True):
+            pass
+            if data.size < 30000:
+                accel_xout_scaled = read_word_2c(0x3b)/16384.0
+                accel_yout_scaled = read_word_2c(0x3d)/16384.0
+                accel_zout_scaled = read_word_2c(0x3f)/16384.0
+
+                dataX = np.append(data,accel_xout_scaled)
+                dataY = np.append(data,accel_yout_scaled)
+                dataZ = np.append(data,accel_zout_scaled)
+            else:
+                np.saveZ('measure/'+datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),dataX,dataY,dataZ)
+                data = np.empty(0)
+                print('Dump')
+
+    	elif (stop_record == True):
+    		t = 1
+    		stop_record = False
+    	else:
+    		print ('Esperando')
+            time.sleep(t)
