@@ -24,7 +24,10 @@ def process1():
     #send signal to process id
     os.kill(processId, signal.SIGUSR1)
 
-    return render_template('trigger1.html')
+    return 'Grabando'
+
+
+    #return render_template('trigger1.html')
 
 
 @app.route('/trigger2')
@@ -43,11 +46,13 @@ def process2():
     #cw = csv.writer(si)
     #cw.writerows(data.read())
     #output = make_response(si.getvalue())
-    output = make_response(data.read())
-    data.close()
-    output.headers["Content-Disposition"] = "attachment; filename=medicion.csv"
-    output.headers["Content-type"] = "text/csv"
-    return output
+    #output = make_response(data.read())
+    #data.close()
+    #output.headers["Content-Disposition"] = "attachment; filename=medicion.csv"
+    #output.headers["Content-type"] = "text/csv"
+    #return output
+
+    return 'Grabacion Terminada'
 
 
     #return render_template('trigger2.html')
