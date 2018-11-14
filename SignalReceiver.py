@@ -86,7 +86,7 @@ if __name__ == '__main__':
                 dataY = np.append(data,accel_yout_scaled)
                 dataZ = np.append(data,accel_zout_scaled)
             else:
-                np.saveZ('measure/'+datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),dataX,dataY,dataZ)
+                np.savez('measure/'+datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),dataX,dataY,dataZ)
                 data = np.empty(0)
                 print('Dump')
 
