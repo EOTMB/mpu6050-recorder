@@ -77,15 +77,18 @@ if __name__ == '__main__':
                 dataZ        = np.empty(0)
                 t            = 0.001
                 start_record = False
+                i = 0
 
-            if data.size < 30000:
+            if i < 30000:
                 accel_xout_scaled = read_word_2c(0x3b)/16384.0
                 accel_yout_scaled = read_word_2c(0x3d)/16384.0
                 accel_zout_scaled = read_word_2c(0x3f)/16384.0
 
-                dataX = np.append(data,accel_xout_scaled)
-                dataY = np.append(data,accel_yout_scaled)
-                dataZ = np.append(data,accel_zout_scaled)
+                dataX = np.append(dataX,accel_xout_scaled)
+                dataY = np.append(dataY,accel_yout_scaled)
+                dataZ = np.append(dataZ,accel_zout_scaled)
+
+                i=+1
             else:
                 np.savez('measure/'+datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),dataX,dataY,dataZ)
                 data = np.empty(0)
