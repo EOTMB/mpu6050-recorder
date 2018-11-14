@@ -77,7 +77,6 @@ if __name__ == '__main__':
             start_record = False
 
         if (continue_record == True):
-            pass
             if data.size < 30000:
                 accel_xout_scaled = read_word_2c(0x3b)/16384.0
                 accel_yout_scaled = read_word_2c(0x3d)/16384.0
