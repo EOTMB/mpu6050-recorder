@@ -10,7 +10,7 @@ import numpy as np
 power_mgmt_1 = 0x6b
 power_mgmt_2 = 0x6c
 
-start_record    = True
+start_record    = False
 continue_record = False
 stop_record     = False
 
@@ -68,15 +68,15 @@ signal.signal(signal.SIGUSR2,handUSR2)
 
 if __name__ == '__main__':
     while (True):
-        if (start_record):
-            bus.write_byte_data(address, power_mgmt_1, 0)
-            dataX        = np.empty(0)
-            dataY        = np.empty(0)
-            dataZ        = np.empty(0)
-            t            = 0.001
-            start_record = False
+        if continue_record:
+            if start_record:
+                bus.write_byte_data(address, power_mgmt_1, 0)
+                dataX        = np.empty(0)
+                dataY        = np.empty(0)
+                dataZ        = np.empty(0)
+                t            = 0.001
+                start_record = False
 
-        if (continue_record == True):
             if data.size < 30000:
                 accel_xout_scaled = read_word_2c(0x3b)/16384.0
                 accel_yout_scaled = read_word_2c(0x3d)/16384.0
@@ -90,7 +90,7 @@ if __name__ == '__main__':
                 data = np.empty(0)
                 print('Dump')
 
-        elif (stop_record == True):
+        elif stop_record:
             np.saveZ('measure/'+datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),dataX,dataY,dataZ)
             t = 1
             stop_record = False
