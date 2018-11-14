@@ -11,7 +11,7 @@ power_mgmt_1 = 0x6b
 power_mgmt_2 = 0x6c
 
 start_record    = True
-continue_record = True
+continue_record = False
 stop_record     = False
 
 t = 1
