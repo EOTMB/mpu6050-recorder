@@ -93,6 +93,7 @@ if __name__ == '__main__':
     	elif (stop_record == True):
             t = 1
             stop_record = False
+
     	else:
             print ('Esperando')
             time.sleep(t)
