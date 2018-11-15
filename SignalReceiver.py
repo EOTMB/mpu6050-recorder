@@ -69,8 +69,8 @@ signal.signal(signal.SIGUSR2,handUSR2)
 
 if __name__ == '__main__':
     while (True):
-        if continue_record:
-            if start_record:
+        if (continue_record):
+            if (start_record):
                 bus.write_byte_data(address, power_mgmt_1, 0)
                 dataX        = np.empty(0)
                 dataY        = np.empty(0)
@@ -94,7 +94,7 @@ if __name__ == '__main__':
                 data = np.empty(0)
                 print('Dump')
 
-        elif stop_record:
+        elif (stop_record):
             np.savez('measure/'+datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),dataX,dataY,dataZ)
             t = 1
             stop_record = False
