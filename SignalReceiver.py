@@ -90,7 +90,7 @@ if __name__ == '__main__':
 
                 i=+1
             else:
-                np.savez('measure/'+datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),dataX,dataY,dataZ)
+                np.savez('measure/'+datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),x=dataX,y=dataY,z=dataZ)
                 data = np.empty(0)
                 print('Dump')
 
