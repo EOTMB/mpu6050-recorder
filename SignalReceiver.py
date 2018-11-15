@@ -95,7 +95,7 @@ if __name__ == '__main__':
                 print('Dump')
 
         elif (stop_record == True):
-            np.savez('measure/'+datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),dataX,dataY,dataZ)
+            np.savez('measure/'+datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),x=dataX,y=dataY,z=dataZ)
             t = 1
             stop_record = False
 
