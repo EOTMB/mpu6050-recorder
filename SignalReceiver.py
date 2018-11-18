@@ -83,19 +83,20 @@ if __name__ == '__main__':
                 accel_xout_scaled = read_word_2c(0x3b)/16384.0
                 accel_yout_scaled = read_word_2c(0x3d)/16384.0
                 accel_zout_scaled = read_word_2c(0x3f)/16384.0
-
                 dataX = np.append(dataX,accel_xout_scaled)
                 dataY = np.append(dataY,accel_yout_scaled)
                 dataZ = np.append(dataZ,accel_zout_scaled)
 
                 i=+1
             else:
-                np.savez('measure/'+datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),x=dataX,y=dataY,z=dataZ)
+				path = 'measure/' + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+				np.savez(path,x=dataX,y=dataY,z=dataZ)
                 data = np.empty(0)
                 print('Dump')
 
         elif (stop_record == True):
-            np.savez('measure/'+datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),x=dataX,y=dataY,z=dataZ)
+			path = 'measure/' + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+			np.savez(path,x=dataX,y=dataY,z=dataZ)
             t = 1
             stop_record = False
 
