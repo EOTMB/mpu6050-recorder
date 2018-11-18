@@ -89,14 +89,14 @@ if __name__ == '__main__':
 
                 i=+1
             else:
-				path = 'measure/' + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-				np.savez(path,x=dataX,y=dataY,z=dataZ)
+                path = 'measure/' + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                np.savez(path,x=dataX,y=dataY,z=dataZ)
                 data = np.empty(0)
                 print('Dump')
 
         elif (stop_record == True):
-			path = 'measure/' + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-			np.savez(path,x=dataX,y=dataY,z=dataZ)
+            path = 'measure/' + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            np.savez(path,x=dataX,y=dataY,z=dataZ)
             t = 1
             stop_record = False
 
